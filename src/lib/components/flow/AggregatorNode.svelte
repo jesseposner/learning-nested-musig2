@@ -125,7 +125,7 @@
 		<button
 			type="button"
 			class="mb-2 cursor-text text-left text-sm font-semibold underline-offset-2 hover:underline"
-			onclick={startLabelEdit}
+			ondblclick={startLabelEdit}
 		>
 			{node.label ?? node.id}
 		</button>

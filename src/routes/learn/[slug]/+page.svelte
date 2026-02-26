@@ -21,7 +21,15 @@
 	const currentIndex = $derived(pages.findIndex((page) => page.slug === data.slug));
 	const prevPage = $derived(currentIndex > 0 ? pages[currentIndex - 1] : null);
 	const nextPage = $derived(currentIndex >= 0 && currentIndex < pages.length - 1 ? pages[currentIndex + 1] : null);
+	const metadataTitle = $derived(typeof data.metadata.title === 'string' ? data.metadata.title : null);
+	const pageTitle = $derived(
+		metadataTitle ? `${metadataTitle} | Learning NestedMuSig2` : 'Learning NestedMuSig2'
+	);
 </script>
+
+<svelte:head>
+	<title>{pageTitle}</title>
+</svelte:head>
 
 <Content />
 

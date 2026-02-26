@@ -502,6 +502,10 @@
 	}
 </script>
 
+<svelte:head>
+	<title>Playground | Learning NestedMuSig2</title>
+</svelte:head>
+
 <section class="space-y-5">
 	<div class="space-y-1">
 		<p class="text-xs uppercase tracking-[0.2em] text-zinc-400">Interactive Playground</p>

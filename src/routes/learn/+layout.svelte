@@ -14,11 +14,12 @@
 	];
 
 	const currentSlug = $derived(page.params.slug ?? '01-introduction');
+	const pageCountLabel = $derived(`Narrative (${pages.length} pages)`);
 </script>
 
 <div class="grid gap-6 lg:grid-cols-[240px_1fr]">
 	<aside class="rounded-lg border border-zinc-800 bg-zinc-900 p-4">
-		<h2 class="mb-3 text-sm font-semibold uppercase tracking-[0.12em] text-zinc-300">Narrative</h2>
+		<h2 class="mb-3 text-sm font-semibold uppercase tracking-[0.12em] text-zinc-300">{pageCountLabel}</h2>
 		<nav class="space-y-1">
 			{#each pages as page}
 				<a
