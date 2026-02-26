@@ -4,4 +4,37 @@ title: Playground Guide
 
 # Playground Guide
 
-Phase 6 content placeholder.
+The playground is designed to make the protocol concrete. You can build a cosigner tree, execute each signing phase, inspect per-node values, and test verification behavior without reading raw transcripts.
+
+Start with the tree builder at the top of the page.
+
+1. Pick a preset: Simple, Nested, Deep, or Complex.
+2. Select an aggregator node, then use **Add Signer** or **Add Group**.
+3. Remove a selected node when you want to simplify the tree.
+4. Click node labels directly to rename them.
+
+Any structural edit resets protocol state. That is intentional, because key lists, coefficients, nonce aggregates, and partial signatures all depend on exact tree structure.
+
+After the tree is set, run the protocol left to right:
+
+1. **Key Gen** computes leaf keypairs and all aggregate keys.
+2. **Round 1** computes leaf nonce commitments, internal aggregates, binding values, and external aggregates.
+3. **Round 2** computes leaf partial signatures with cascaded terms and aggregates to one root signature.
+4. **Verify** checks Schnorr validity at the root.
+
+Use the step bar as both progress and navigation. Completed steps can be revisited to inspect state snapshots. This is useful when comparing how the same phase looks in shallow versus deep trees.
+
+The node detail panel is where most of the learning happens. Click any leaf or aggregator:
+
+- Leaves show public key, local aggregation coefficient, nonce commitments, and partial signature.
+- Aggregators show key list, child coefficients, internal and external nonce aggregates, binding value $b$, and aggregated partial signature.
+
+The verification panel exposes root-level values $\tilde{X}$, $c$, $R$, and $s$. Press **Tamper** to flip a bit in $s$ and rerun verification. The original signature should pass, and the tampered one should fail.
+
+Suggested experiments:
+
+- Compare **Simple** versus **Deep** presets and inspect how many ancestor-dependent terms each leaf accumulates.
+- Focus on one deep leaf and track how $\Lambda$ changes the number of coefficients and binding values involved in its Round 2 computation.
+- Run **Round 1**, then change the message before **Round 2**. Notice that lower-level binding stays valid while root-level challenge and final signature change with the message.
+
+If the equations feel abstract, use the playground as your primary reference and the narrative pages as a map. NestedMuSig2 is easiest to understand when you can inspect the exact intermediate values that feed each formula.

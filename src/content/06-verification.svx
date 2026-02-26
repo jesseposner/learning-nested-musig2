@@ -2,6 +2,36 @@
 title: Verification
 ---
 
+<script lang="ts">
+	import VerifyDemo from '$lib/components/demos/VerifyDemo.svelte';
+</script>
+
 # Verification
 
-Phase 6 content placeholder.
+NestedMuSig2 deliberately ends with standard Schnorr verification. Once the root aggregator has produced a final signature $\sigma = (R, s)$ on message $m$ under aggregate key $\tilde{X}$, anyone checks:
+
+$$
+g^s \stackrel{?}{=} R \cdot \tilde{X}^c
+$$
+
+with
+
+$$
+c = H_{\text{sig}}(\tilde{X}, R, m)
+$$
+
+No tree metadata appears in this equation. The verifier only needs $(\tilde{X}, m, R, s)$, exactly as in normal Schnorr and flat MuSig2 verification.
+
+This gives a useful privacy property: nested policy structure is invisible to the verifier. A signature produced by a deep cosigner tree is indistinguishable, at the verification interface, from a signature produced by a flat signing set that happened to use the same aggregate key.
+
+That property matters for on-chain privacy and system encapsulation. Internal organizational structure, signer hierarchy, and subgroup boundaries stay off the wire. External observers validate correctness, not architecture.
+
+Another practical benefit is interoperability. Existing Schnorr verification code does not need to understand tree semantics, depth, or per-level binding values. Wallets, indexers, and script evaluators can keep the same verification pathway they already use for non-nested aggregate signatures. NestedMuSig2 shifts complexity to the signer side while preserving a stable external interface.
+
+You can think of verification as the compression boundary of the whole protocol. Upstream phases may involve many participants, intermediate aggregates, and local transcript checks, but all of that state must reduce to one equation at the end. If it does not, either a signer deviated, nonce handling was inconsistent, or message binding changed between phases.
+
+If a participant cheats during signing, verification eventually fails. In practice, honest participants keep transcripts and can run interactive blame to isolate the faulty contribution. The key point is that failure is detectable at the same final verification boundary, even though faults may originate deep inside the tree.
+
+Use the demo to see this directly. It generates a valid signature, verifies it, then flips one bit of $s$. Verification immediately fails for the tampered signature.
+
+<VerifyDemo />

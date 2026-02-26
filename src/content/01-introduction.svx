@@ -2,14 +2,22 @@
 title: Introduction
 ---
 
-<script>
-	import InlineNote from '$lib/components/ui/InlineNote.svelte';
-</script>
+# What Is NestedMuSig2?
 
-# NestedMuSig2 Introduction
+Bitcoin developers already live with a practical constraint: keys represent policies, not just people. A taproot key path spend often encodes a multi-party control policy such as a 2-of-3 wallet, a corporate approval flow, or a service architecture where one cosigner is an HSM cluster. MuSig2 helps by turning many signers into one aggregate Schnorr public key and one Schnorr signature, so on-chain data is compact and private.
 
-NestedMuSig2 is a recursive extension of MuSig2 for cosigner trees.
+NestedMuSig2 starts where plain MuSig2 gets awkward. In real systems, one participant in a signing session is often not a single device. It can be a team, a quorum, or another service that internally coordinates multiple keys. If you try to nest MuSig2 naively, by treating that subgroup output as just another signer without carefully accounting for nonce binding and coefficient cascades, you break the security argument. The equations no longer line up in the same way they do in a flat session, and nonce aggregation becomes vulnerable to manipulation.
 
-<InlineNote text="Embedded Svelte component inside mdsvex" />
+The paper solves this by introducing a cosigner tree and two key adjustments. First, Round 1 uses explicit nonce binding at every aggregation layer. Second, Round 2 computes each leaf signer's partial signature with cascaded key coefficients and binding values from its full path to the root. The resulting signature still has the standard Schnorr form.
 
-Inline math works: $a_i = H_{\text{agg}}(L, X_i)$.
+At the core, the final verification equation remains:
+
+$$
+g^s = R \cdot \tilde{X}^c
+$$
+
+where $\tilde{X}$ is the root aggregate key and $c = H_{\text{sig}}(\tilde{X}, R, m)$. The verifier only sees $(\tilde{X}, m, \sigma)$ with $\sigma = (R, s)$. There is no marker that says "this came from a nested signing structure".
+
+That indistinguishability property is the point. You can compose sophisticated internal control structures while presenting a normal Schnorr interface externally, with the same verification logic and similar privacy profile as flat MuSig2.
+
+The rest of this guide walks through the protocol step by step: tree structure, key aggregation, Round 1 nonce flow, Round 2 cascading coefficients, and final verification. Keep the playground open while reading. It lets you build trees, inspect intermediate values at each node, and see exactly how local computations collapse into one standard signature.

@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { page } from '$app/state';
+
 	let { children } = $props();
 
 	const pages = [
@@ -10,6 +12,8 @@
 		{ slug: '06-verification', title: 'Verification' },
 		{ slug: '07-playground-guide', title: 'Playground Guide' }
 	];
+
+	const currentSlug = $derived(page.params.slug ?? '01-introduction');
 </script>
 
 <div class="grid gap-6 lg:grid-cols-[240px_1fr]">
@@ -18,7 +22,13 @@
 		<nav class="space-y-1">
 			{#each pages as page}
 				<a
-					class="block rounded px-2 py-1 text-sm text-zinc-300 hover:bg-zinc-800 hover:text-zinc-100"
+					class={[
+						'block rounded px-2 py-1 text-sm transition-colors',
+						currentSlug === page.slug
+							? 'bg-zinc-800 text-zinc-100 font-semibold'
+							: 'text-zinc-300 hover:bg-zinc-800 hover:text-zinc-100'
+					]}
+					aria-current={currentSlug === page.slug ? 'page' : undefined}
 					href={`/learn/${page.slug}`}>{page.title}</a
 				>
 			{/each}

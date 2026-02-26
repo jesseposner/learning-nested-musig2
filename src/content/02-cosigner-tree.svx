@@ -2,6 +2,31 @@
 title: Cosigner Tree
 ---
 
-# Cosigner Tree
+# The Cosigner Tree
 
-Phase 6 content placeholder.
+NestedMuSig2 models a signing policy as a tree. Leaves are actual signers that hold secret keys. Internal nodes are aggregators that combine child outputs and pass one aggregate output upward. The root is the only node visible to an external verifier, because the root aggregate key is the public key for verification.
+
+This representation captures something flat MuSig2 cannot express cleanly: hierarchical control. A leaf signer can be a person with one hardware device. An internal node can represent a team service, a committee, or a key management domain that performs its own internal coordination before contributing one result to a parent.
+
+For each leaf, define its nesting depth $\Lambda$ as the number of aggregator ancestors on the path from that leaf to the root. In a flat MuSig2 session, every signer has $\Lambda = 1$. In a nested tree, different leaves can have different depths.
+
+Consider this concrete tree:
+
+- Root
+- Alice (leaf)
+- Group B (aggregator) with children Bob and Carol
+- Group C (aggregator) with child Dave
+
+In this tree, Alice has depth $\Lambda = 1$, Bob and Carol have $\Lambda = 2$, and Dave also has $\Lambda = 2$. The deeper signers must account for more intermediate binding and aggregation terms during Round 2.
+
+The important design feature is invisible nesting. Each aggregator computes an aggregate public key from its children. That aggregate key is just an elliptic curve point, exactly like any other public key. The parent does not need to know whether a child key came from one leaf or from an entire subtree. Recursively, the root key
+
+$$
+\tilde{X}
+$$
+
+is simply the top-level aggregate key. To the verifier, it is just a key.
+
+This is what makes NestedMuSig2 a practical abstraction boundary. Teams can keep internal policy private, rotate internal structure over time, or isolate operational domains without changing the external verification interface. As long as each internal node follows the protocol, the root behaves like a standard MuSig2 participant at the next level up.
+
+When you use the playground, try building a flat tree and a deep tree, then compare which nodes carry intermediate values in Round 1 and Round 2. You will see the same root verification interface in both cases, but richer internal state in deeper structures.
