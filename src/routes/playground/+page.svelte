@@ -47,7 +47,7 @@
 	let message = $state('Hello, NestedMuSig2!');
 	let verifyResult = $state<boolean | null>(null);
 	let status = $state('Build tree and step through the protocol.');
-	const verificationEquation = 'g^s = R \\\\cdot \\\\tilde{X}^c';
+	const verificationEquation = 'g^s = R \\cdot \\tilde{X}^c';
 
 	const messageBytes = $derived(encoder.encode(message));
 	const hasKeys = $derived(Boolean(tree.root.pk));
