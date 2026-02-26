@@ -3,24 +3,21 @@ title: Verification
 ---
 
 <script lang="ts">
+	import KaTeX from '$lib/components/ui/KaTeX.svelte';
 	import VerifyDemo from '$lib/components/demos/VerifyDemo.svelte';
 </script>
 
 # Verification
 
-NestedMuSig2 deliberately ends with standard Schnorr verification. Once the root aggregator has produced a final signature $\sigma = (R, s)$ on message $m$ under aggregate key $\tilde{X}$, anyone checks:
+NestedMuSig2 deliberately ends with standard Schnorr verification. Once the root aggregator has produced a final signature σ = (R, s) on message $m$ under aggregate key X̃, anyone checks:
 
-$$
-g^s \stackrel{?}{=} R \cdot \tilde{X}^c
-$$
+<KaTeX math={'g^s \\stackrel{?}{=} R \\cdot \\tilde{X}^c'} displayMode />
 
-with
+with:
 
-$$
-c = H_{\text{sig}}(\tilde{X}, R, m)
-$$
+<KaTeX math={'c = H_{\\text{sig}}(\\tilde{X}, R, m)'} displayMode />
 
-No tree metadata appears in this equation. The verifier only needs $(\tilde{X}, m, R, s)$, exactly as in normal Schnorr and flat MuSig2 verification.
+No tree metadata appears in this equation. The verifier only needs `(X̃, m, R, s)`, exactly as in normal Schnorr and flat MuSig2 verification.
 
 This gives a useful privacy property: nested policy structure is invisible to the verifier. A signature produced by a deep cosigner tree is indistinguishable, at the verification interface, from a signature produced by a flat signing set that happened to use the same aggregate key.
 

@@ -3,6 +3,7 @@ title: Key Aggregation
 ---
 
 <script lang="ts">
+	import KaTeX from '$lib/components/ui/KaTeX.svelte';
 	import KeyAggDemo from '$lib/components/demos/KeyAggDemo.svelte';
 </script>
 
@@ -10,44 +11,34 @@ title: Key Aggregation
 
 Round zero is key setup. Every leaf signer samples a secret scalar $sk$ and publishes a public key:
 
-$$
-pk = g^{sk}
-$$
+<KaTeX math={'pk = g^{sk}'} displayMode />
 
 So far this is normal Schnorr key generation. The NestedMuSig2-specific behavior starts when we aggregate keys at each internal node.
 
 MuSig-style aggregation cannot be a simple point sum, because that would allow rogue-key attacks. Instead, each key gets a coefficient derived from the full key list for that aggregation context:
 
-$$
-a_i = H_{\text{agg}}(L, X_i)
-$$
+<KaTeX math={'a_i = H_{\\text{agg}}(L, X_i)'} displayMode />
 
-where $L$ is the local key list and $X_i$ is one member key. The aggregate key is then
+where $L$ is the local key list and $X_i$ is one member key. The aggregate key is then:
 
-$$
-\tilde{X} = \prod_i X_i^{a_i}
-$$
+<KaTeX math={'\\tilde{X} = \\prod_i X_i^{a_i}'} displayMode />
 
 In implementation terms this is a multi-scalar multiplication over the child points and their coefficients.
 
 The recursive insight is that an internal node's aggregate key becomes a normal key in its parent list. Suppose Group B contains Bob and Carol:
 
-$$
-\tilde{X}_B = X_{\text{Bob}}^{a_{\text{Bob}}} \cdot X_{\text{Carol}}^{a_{\text{Carol}}}
-$$
+<KaTeX math={'\\tilde{X}_B = X_{\\text{Bob}}^{a_{\\text{Bob}}} \\cdot X_{\\text{Carol}}^{a_{\\text{Carol}}}'} displayMode />
 
 At the root, if children are Alice, Group B, and Group C:
 
-$$
-\tilde{X}_{\text{root}} = X_{\text{Alice}}^{a_{\text{Alice}}} \cdot \tilde{X}_B^{a_B} \cdot \tilde{X}_C^{a_C}
-$$
+<KaTeX math={'\\tilde{X}_{\\text{root}} = X_{\\text{Alice}}^{a_{\\text{Alice}}} \\cdot \\tilde{X}_B^{a_B} \\cdot \\tilde{X}_C^{a_C}'} displayMode />
 
-Substituting $\tilde{X}_B$ and $\tilde{X}_C$ expands the root key into weighted contributions from all leaves. This is why the tree composes algebraically: every level uses the same rule, and each child output is still an elliptic curve point.
+Substituting X̃_B and X̃_C expands the root key into weighted contributions from all leaves. This is why the tree composes algebraically: every level uses the same rule, and each child output is still an elliptic curve point.
 
 Notice that coefficients are local to each level. A signer's public key can appear in multiple derived expressions through ancestor aggregation, but each coefficient comes from that level's own list $L$. This locality is exactly what Round 2 will later reconstruct for cascading challenge terms.
 
 From a systems view, key aggregation gives you two benefits. First, rogue-key resistance remains intact at each aggregation boundary. Second, the parent node never needs to inspect internal details of a subtree. It only consumes the subtree aggregate key as one input to its own aggregation.
 
-The demo below regenerates three keys, computes each $a_i$, and shows the final $\tilde{X}$.
+The demo below regenerates three keys, computes each $a_i$, and shows the final aggregate key X̃.
 
 <KeyAggDemo />

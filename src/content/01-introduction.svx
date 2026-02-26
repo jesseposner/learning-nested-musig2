@@ -2,6 +2,10 @@
 title: Introduction
 ---
 
+<script lang="ts">
+	import KaTeX from '$lib/components/ui/KaTeX.svelte';
+</script>
+
 # What Is NestedMuSig2?
 
 Bitcoin developers already live with a practical constraint: keys represent policies, not just people. A taproot key path spend often encodes a multi-party control policy such as a 2-of-3 wallet, a corporate approval flow, or a service architecture where one cosigner is an HSM cluster. MuSig2 helps by turning many signers into one aggregate Schnorr public key and one Schnorr signature, so on-chain data is compact and private.
@@ -12,11 +16,9 @@ The paper solves this by introducing a cosigner tree and two key adjustments. Fi
 
 At the core, the final verification equation remains:
 
-$$
-g^s = R \cdot \tilde{X}^c
-$$
+<KaTeX math={'g^s = R \\cdot \\tilde{X}^c'} displayMode />
 
-where $\tilde{X}$ is the root aggregate key and $c = H_{\text{sig}}(\tilde{X}, R, m)$. The verifier only sees $(\tilde{X}, m, \sigma)$ with $\sigma = (R, s)$. There is no marker that says "this came from a nested signing structure".
+Here X̃ is the root aggregate key and `c = H_sig(X̃, R, m)`. The verifier only sees `(X̃, m, σ)` with `σ = (R, s)`. There is no marker that says this came from a nested signing structure.
 
 That indistinguishability property is the point. You can compose sophisticated internal control structures while presenting a normal Schnorr interface externally, with the same verification logic and similar privacy profile as flat MuSig2.
 

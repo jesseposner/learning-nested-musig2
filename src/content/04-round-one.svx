@@ -3,6 +3,7 @@ title: Round One
 ---
 
 <script lang="ts">
+	import KaTeX from '$lib/components/ui/KaTeX.svelte';
 	import Round1Demo from '$lib/components/demos/Round1Demo.svelte';
 </script>
 
@@ -10,33 +11,25 @@ title: Round One
 
 Round 1 in NestedMuSig2 mirrors MuSig2 in spirit but adds an explicit layered aggregation structure.
 
-Each leaf signer runs `Sign` and samples $\nu = 2$ random nonce scalars $r_{i,1}, r_{i,2}$, publishing commitments:
+Each leaf signer runs `Sign` and samples ν = 2 random nonce scalars for each nonce coordinate, publishing commitments:
 
-$$
-R_{i,j} = g^{r_{i,j}}
-$$
+<KaTeX math={'R_{i,j} = g^{r_{i,j}}'} displayMode />
 
 An internal node then combines child commitments coordinate-wise with `SignAgg`:
 
-$$
-R'_j = \prod_i R_{i,j}
-$$
+<KaTeX math={"R'_j = \\prod_i R_{i,j}"} displayMode />
 
-These $R'_j$ values are the **internal aggregate nonces**. They are pre-binding values and must be retained for Round 2 calculations.
+These R-prime values are the internal aggregate nonces. They are pre-binding values and must be retained for Round 2 calculations.
 
 Next comes `SignAggExt`, which is the critical defense step:
 
-$$
-b = H_{\text{non}}(\tilde{X}, R'_1, \ldots, R'_\nu)
-$$
+<KaTeX math={"b = H_{\\text{non}}(\\tilde{X}, R'_1, \\ldots, R'_\\nu)"} displayMode />
 
-$$
-R_j = (R'_j)^{b^{j-1}}
-$$
+<KaTeX math={"R_j = (R'_j)^{b^{j-1}}"} displayMode />
 
-The output $R_j$ values are the **external aggregate nonces** that propagate upward. Without this binding transform, aggregated nonce vectors are malleable in ways that enable Wagner-style and ROS-style attacks against multi-party signing flows.
+The output R_j values are the external aggregate nonces that propagate upward. Without this binding transform, aggregated nonce vectors are malleable in ways that enable Wagner-style and ROS-style attacks against multi-party signing flows.
 
-A key protocol insight from the paper is what goes into the hash. For non-root levels, binding uses $H_{\text{non}}$ and does **not** include the message $m$. Only at the root does the protocol use $H_{\text{non\_bar}}(\tilde{X}, R'_1, \ldots, R'_\nu, m)$, which includes the message.
+A key protocol insight from the paper is what goes into the hash. For non-root levels, binding uses `H_non` and does not include the message `m`. Only at the root does the protocol use `H_non_bar(X̃, R'_1, ..., R'_ν, m)`, which includes the message.
 
 That separation is essential for real systems. It allows lower-level nonce exchange and aggregation to happen before the final message is known, which matches practical workflows where message construction, fee finalization, or policy checks can happen later in the signing pipeline.
 

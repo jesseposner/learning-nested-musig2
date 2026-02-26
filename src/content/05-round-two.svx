@@ -2,40 +2,42 @@
 title: Round Two
 ---
 
+<script lang="ts">
+	import KaTeX from '$lib/components/ui/KaTeX.svelte';
+</script>
+
 # Round 2: Sign' and the Cascading Insight
 
 Round 2 is where NestedMuSig2 differs most from flat MuSig2. In flat MuSig2, each signer uses one aggregation context. In a tree, each leaf signer sits under a path of aggregators, so its partial signature must absorb multiple levels of key coefficients and nonce-binding values.
 
-Take one leaf signer at depth $\Lambda$. The signer reconstructs the ancestor contexts along its path to the root.
+Take one leaf signer at depth Λ. The signer reconstructs the ancestor contexts along its path to the root.
 
-1. For each level $\ell$, reconstruct that level's key list $L_\ell$ and compute the signer-side coefficient $a_{1,\ell} = H_{\text{agg}}(L_\ell, pk_{1,\ell})$.
-2. Collect binding values for each level. Intermediate levels use
-   $$
-   b_\ell = H_{\text{non}}(pk_{1,\ell-1}, \text{internalAgg}_\ell)
-   $$
-   and the root uses
-   $$
-   b_0 = H_{\text{non\_bar}}(\tilde{X}, \text{top nonces}, m)
-   $$
-3. Build cascade terms:
-   $$
-   \check{b} = \prod_{\ell=0}^{\Lambda-1} b_\ell, \qquad \check{c} = c \cdot \prod_{\ell=0}^{\Lambda-1} a_{1,\ell}
-   $$
-   where $c = H_{\text{sig}}(\tilde{X}, R, m)$.
+1. For each level ℓ, reconstruct that level's key list `L_ℓ` and compute the signer-side coefficient `a_{1,ℓ}` with `KeyAggCoef`.
+2. Collect binding values for each level. Intermediate levels use this form:
+
+<KaTeX math={'b_\\ell = H_{\\text{non}}(pk_{1,\\ell-1}, \\text{internalAgg}_\\ell)'} displayMode />
+
+and the root uses:
+
+<KaTeX math={'b_0 = H_{\\text{non\\_bar}}(\\tilde{X}, \\text{top nonces}, m)'} displayMode />
+
+3. Build the cascade terms:
+
+<KaTeX math={'\\check{b} = \\prod_{\\ell=0}^{\\Lambda-1} b_\\ell, \\qquad \\check{c} = c \\cdot \\prod_{\\ell=0}^{\\Lambda-1} a_{1,\\ell}'} displayMode />
+
+where `c = H_sig(X̃, R, m)`.
+
 4. Compute the partial signature:
-   $$
-   s_1 = \check{c} \cdot sk + \sum_{j=0}^{\nu-1} r_j \cdot \check{b}^j
-   $$
+
+<KaTeX math={'s_1 = \\check{c} \\cdot sk + \\sum_{j=0}^{\\nu-1} r_j \\cdot \\check{b}^j'} displayMode />
 
 This equation is the heart of NestedMuSig2. It looks like a normal Schnorr-style affine form, but both challenge and nonce weights are now products across tree levels.
 
-After every leaf computes its $s_i$, `SignAgg'` is simple:
+After every leaf computes $s_i$, `SignAgg'` is simple:
 
-$$
-s = \sum_i s_i
-$$
+<KaTeX math={'s = \\sum_i s_i'} displayMode />
 
-Why does this verify as normal Schnorr? Intuitively, the coefficient products were chosen so every leaf contribution is weighted exactly as its key and nonce were weighted during recursive aggregation. When summed, the nested terms collapse into one root-level relation between $s$, $R$, and $\tilde{X}$. The verifier does not see per-level artifacts, only the final tuple.
+Why does this verify as normal Schnorr? Intuitively, the coefficient products were chosen so every leaf contribution is weighted exactly as its key and nonce were weighted during recursive aggregation. When summed, the nested terms collapse into one root-level relation between $s$, $R$, and the aggregate key X̃. The verifier does not see per-level artifacts, only the final tuple.
 
 This also explains why Round 1 must retain internal aggregates. `Sign'` needs those internal values to recompute the same binding factors that shaped each ancestor's external nonce output.
 
