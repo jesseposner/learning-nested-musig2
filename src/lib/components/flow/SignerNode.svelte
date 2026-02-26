@@ -9,11 +9,15 @@
 		treeNode: TreeNode;
 		currentPhase: Phase;
 		registerElement?: (id: string, element: HTMLElement | null, depth: number) => void;
+		onLabelChange?: (id: string, label: string) => void;
 	};
 
 	let { id, data, selected }: NodeProps = $props();
 
-	let element: HTMLElement | null = null;
+	let element = $state.raw<HTMLElement | null>(null);
+	let labelInput = $state.raw<HTMLInputElement | null>(null);
+	let editingLabel = $state(false);
+	let draftLabel = $state('');
 	const nodeData = $derived(data as SignerNodeData);
 	const node = $derived(nodeData.treeNode);
 
@@ -46,11 +50,48 @@
 		return 'border-zinc-500/40 bg-zinc-800/40 text-zinc-400';
 	}
 
+	function startLabelEdit(event: MouseEvent) {
+		event.stopPropagation();
+		draftLabel = node.label ?? node.id;
+		editingLabel = true;
+	}
+
+	function commitLabel(event?: Event) {
+		event?.stopPropagation();
+		const next = draftLabel.trim();
+		if (next.length > 0 && next !== (node.label ?? node.id)) {
+			nodeData.onLabelChange?.(id, next);
+		}
+		editingLabel = false;
+	}
+
+	function cancelLabel(event?: Event) {
+		event?.stopPropagation();
+		editingLabel = false;
+	}
+
+	function handleLabelKeydown(event: KeyboardEvent) {
+		if (event.key === 'Enter') {
+			event.preventDefault();
+			commitLabel(event);
+		} else if (event.key === 'Escape') {
+			event.preventDefault();
+			cancelLabel(event);
+		}
+	}
+
 	$effect(() => {
 		nodeData.registerElement?.(id, element, node.depth ?? 0);
 		return () => {
 			nodeData.registerElement?.(id, null, node.depth ?? 0);
 		};
+	});
+
+	$effect(() => {
+		if (editingLabel) {
+			labelInput?.focus();
+			labelInput?.select();
+		}
 	});
 </script>
 
@@ -65,7 +106,24 @@
 >
 	<Handle type="target" position={Position.Top} />
 
-	<p class="mb-2 text-sm font-semibold">{node.label ?? node.id}</p>
+	{#if editingLabel}
+		<input
+			bind:this={labelInput}
+			class="mb-2 w-full rounded border border-zinc-500 bg-zinc-900 px-2 py-1 text-sm font-semibold text-zinc-100"
+			bind:value={draftLabel}
+			onblur={commitLabel}
+			onkeydown={handleLabelKeydown}
+			onclick={(event) => event.stopPropagation()}
+		/>
+	{:else}
+		<button
+			type="button"
+			class="mb-2 cursor-text text-left text-sm font-semibold underline-offset-2 hover:underline"
+			onclick={startLabelEdit}
+		>
+			{node.label ?? node.id}
+		</button>
+	{/if}
 
 	<div class="space-y-1.5">
 		{#if pkHex}

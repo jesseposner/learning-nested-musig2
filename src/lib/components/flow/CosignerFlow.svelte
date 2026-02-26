@@ -26,6 +26,7 @@
 		treeNode: TreeNode;
 		currentPhase: Phase;
 		registerElement: (id: string, element: HTMLElement | null, depth: number) => void;
+		onLabelChange?: (id: string, label: string) => void;
 	};
 
 	type FlowEdgeData = {
@@ -38,11 +39,13 @@
 	let {
 		tree = null,
 		currentPhase = 'idle',
-		onNodeSelect
+		onNodeSelect,
+		onNodeLabelChange
 	}: {
 		tree?: CosignerTree | null;
 		currentPhase?: Phase;
 		onNodeSelect?: (node: TreeNode | null) => void;
+		onNodeLabelChange?: (id: string, label: string) => void;
 	} = $props();
 
 	const nodeTypes: NodeTypes = {
@@ -135,7 +138,8 @@
 			data: {
 				treeNode,
 				currentPhase: phase,
-				registerElement
+				registerElement,
+				onLabelChange: onNodeLabelChange
 			},
 			position: { x: 0, y: 0 }
 		}));
