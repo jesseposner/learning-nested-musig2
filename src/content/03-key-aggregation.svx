@@ -1,0 +1,7 @@
+---
+title: Key Aggregation
+---
+
+# Key Aggregation
+
+Phase 6 content placeholder.

@@ -1,0 +1,15 @@
+---
+title: Introduction
+---
+
+<script>
+	import InlineNote from '$lib/components/ui/InlineNote.svelte';
+</script>
+
+# NestedMuSig2 Introduction
+
+NestedMuSig2 is a recursive extension of MuSig2 for cosigner trees.
+
+<InlineNote text="Embedded Svelte component inside mdsvex" />
+
+Inline math works: $a_i = H_{\text{agg}}(L, X_i)$.
