@@ -41,12 +41,12 @@
 	regenerate();
 </script>
 
-<div class="not-prose space-y-3 rounded-lg border border-zinc-800 bg-zinc-950 p-4">
+<div class="not-prose space-y-3 rounded-lg border border-stone-200 bg-stone-50 p-4">
 	<div class="flex items-center justify-between gap-3">
-		<h3 class="text-sm font-semibold text-zinc-100">Key Aggregation Demo</h3>
+		<h3 class="text-sm font-semibold text-stone-900">Key Aggregation Demo</h3>
 		<button
 			type="button"
-			class="rounded-md border border-zinc-700 px-2 py-1 text-xs font-semibold text-zinc-100 hover:bg-zinc-800"
+			class="rounded-md border border-stone-300 px-2 py-1 text-xs font-semibold text-stone-700 hover:bg-stone-100"
 			onclick={regenerate}>Regenerate</button
 		>
 	</div>
@@ -55,8 +55,8 @@
 
 	<div class="space-y-3">
 		{#each rows as row}
-			<div class="rounded-md border border-zinc-800 bg-zinc-900 p-3">
-				<p class="mb-2 text-xs font-semibold uppercase tracking-wide text-zinc-300">{row.name}</p>
+			<div class="rounded-md border border-stone-200 bg-white p-3">
+				<p class="mb-2 text-xs font-semibold uppercase tracking-wide text-stone-500">{row.name}</p>
 				<div class="flex flex-col gap-1">
 					<HexValue value={pointHex(row.pk)} label="pk" />
 					<HexValue value={scalarHex(row.coef)} label="a_i" />
@@ -66,7 +66,7 @@
 	</div>
 
 	{#if aggregateKeyHex}
-		<div class="rounded-md border border-emerald-700/50 bg-emerald-900/10 p-3">
+		<div class="rounded-md border border-emerald-300 bg-emerald-50 p-3">
 			<HexValue value={aggregateKeyHex} label="X~" />
 		</div>
 	{/if}

@@ -36,11 +36,11 @@
 
 <Content />
 
-<nav class="not-prose mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-zinc-800 pt-4">
+<nav class="not-prose mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-stone-200 pt-4">
 	<div>
 		{#if prevPage}
 			<a
-				class="inline-flex items-center rounded-md border border-zinc-700 px-3 py-1.5 text-sm text-zinc-200 hover:bg-zinc-800"
+				class="inline-flex items-center rounded-md border border-stone-300 px-3 py-1.5 text-sm text-stone-600 hover:bg-stone-50"
 				href={`${base}/learn/${prevPage.slug}`}>← {prevPage.title}</a
 			>
 		{/if}
@@ -48,7 +48,7 @@
 	<div>
 		{#if nextPage}
 			<a
-				class="inline-flex items-center rounded-md border border-zinc-700 px-3 py-1.5 text-sm text-zinc-200 hover:bg-zinc-800"
+				class="inline-flex items-center rounded-md border border-stone-300 px-3 py-1.5 text-sm text-stone-600 hover:bg-stone-50"
 				href={`${base}/learn/${nextPage.slug}`}>{nextPage.title} →</a
 			>
 		{/if}

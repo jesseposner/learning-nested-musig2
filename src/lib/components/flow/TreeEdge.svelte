@@ -39,15 +39,15 @@
 	function phaseStrokeColor(currentPhase: Phase): string {
 		switch (currentPhase) {
 			case 'keygen':
-				return '#38bdf8';
+				return '#4338CA';
 			case 'round1':
-				return '#f59e0b';
+				return '#D97706';
 			case 'round2':
-				return '#34d399';
+				return '#059669';
 			case 'verify':
-				return '#22c55e';
+				return '#16A34A';
 			default:
-				return '#71717a';
+				return '#A8A29E';
 		}
 	}
 

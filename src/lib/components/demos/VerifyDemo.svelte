@@ -57,18 +57,18 @@
 	newSignature();
 </script>
 
-<div class="not-prose space-y-3 rounded-lg border border-zinc-800 bg-zinc-950 p-4">
+<div class="not-prose space-y-3 rounded-lg border border-stone-200 bg-stone-50 p-4">
 	<div class="flex items-center justify-between gap-2">
-		<h3 class="text-sm font-semibold text-zinc-100">Verification Demo</h3>
+		<h3 class="text-sm font-semibold text-stone-900">Verification Demo</h3>
 		<div class="flex gap-2">
 			<button
 				type="button"
-				class="rounded-md border border-zinc-700 px-2 py-1 text-xs font-semibold text-zinc-100 hover:bg-zinc-800"
+				class="rounded-md border border-stone-300 px-2 py-1 text-xs font-semibold text-stone-700 hover:bg-stone-100"
 				onclick={newSignature}>New Signature</button
 			>
 			<button
 				type="button"
-				class="rounded-md border border-zinc-700 px-2 py-1 text-xs font-semibold text-zinc-100 hover:bg-zinc-800"
+				class="rounded-md border border-stone-300 px-2 py-1 text-xs font-semibold text-stone-700 hover:bg-stone-100"
 				onclick={tamper}>Tamper</button
 			>
 		</div>
@@ -84,16 +84,16 @@
 	</div>
 
 	{#if valid !== null}
-		<p class={['text-sm font-semibold', valid ? 'text-emerald-300' : 'text-rose-300']}>
+		<p class={['text-sm font-semibold', valid ? 'text-emerald-600' : 'text-rose-600']}>
 			Original signature: {valid ? 'Valid' : 'Invalid'}
 		</p>
 	{/if}
 
 	{#if tamperedS}
-		<div class="space-y-2 rounded-md border border-zinc-800 bg-zinc-900 p-3">
+		<div class="space-y-2 rounded-md border border-stone-200 bg-white p-3">
 			<HexValue value={tamperedS} label="tampered s" />
 			{#if tamperedValid !== null}
-				<p class={['text-sm font-semibold', tamperedValid ? 'text-amber-300' : 'text-rose-300']}>
+				<p class={['text-sm font-semibold', tamperedValid ? 'text-amber-600' : 'text-rose-600']}>
 					Tampered signature: {tamperedValid ? 'Valid (unexpected)' : 'Invalid (expected)'}
 				</p>
 			{/if}

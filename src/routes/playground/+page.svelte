@@ -493,12 +493,12 @@
 
 	function stepClasses(index: number): string {
 		if (index === currentStepIndex) {
-			return 'border-sky-400 bg-sky-500/20 text-sky-100';
+			return 'border-indigo-600 bg-indigo-50 text-indigo-700';
 		}
 		if (index <= completedStepIndex) {
-			return 'border-emerald-500/60 bg-emerald-500/15 text-emerald-100';
+			return 'border-emerald-600 bg-emerald-50 text-emerald-700';
 		}
-		return 'border-zinc-700 bg-zinc-900 text-zinc-400';
+		return 'border-stone-300 bg-white text-stone-400';
 	}
 </script>
 
@@ -508,15 +508,15 @@
 
 <section class="space-y-5">
 	<div class="space-y-1">
-		<p class="text-xs uppercase tracking-[0.2em] text-zinc-400">Interactive Playground</p>
-		<h1 class="text-2xl font-semibold text-zinc-100">NestedMuSig2 Interactive Playground</h1>
-		<p class="text-zinc-300">Build a cosigner tree and step through the signing protocol.</p>
+		<p class="text-xs uppercase tracking-[0.2em] text-stone-400">Interactive Playground</p>
+		<h1 class="text-2xl font-serif font-semibold text-stone-900">NestedMuSig2 Interactive Playground</h1>
+		<p class="text-stone-600">Build a cosigner tree and step through the signing protocol.</p>
 	</div>
 
-	<div class="rounded-xl border border-zinc-800 bg-zinc-900 p-4">
+	<div class="rounded-xl border border-stone-200 bg-white p-4 shadow-sm">
 		<div class="flex flex-wrap items-center justify-between gap-3">
-			<h2 class="text-sm font-semibold uppercase tracking-wide text-zinc-300">Tree Builder</h2>
-			<p class="text-xs text-zinc-400">Target aggregator: {selectedAggregator.label ?? selectedAggregator.id}</p>
+			<h2 class="text-sm font-semibold uppercase tracking-wide text-stone-500">Tree Builder</h2>
+			<p class="text-xs text-stone-400">Target aggregator: {selectedAggregator.label ?? selectedAggregator.id}</p>
 		</div>
 
 		<div class="mt-3 flex flex-wrap gap-2">
@@ -531,8 +531,8 @@
 					class={[
 						'rounded-md border px-3 py-1.5 text-xs font-semibold',
 						activePreset === preset.key
-							? 'border-emerald-500/70 bg-emerald-500/20 text-emerald-100'
-							: 'border-zinc-700 text-zinc-200 hover:bg-zinc-800'
+							? 'border-emerald-600 bg-emerald-50 text-emerald-700'
+							: 'border-stone-300 text-stone-700 hover:bg-stone-50'
 					]}
 					onclick={() => loadPreset(preset.key as Exclude<PresetKey, 'custom'>)}
 				>
@@ -544,30 +544,30 @@
 		<div class="mt-3 flex flex-wrap gap-2">
 			<button
 				type="button"
-				class="rounded-md border border-zinc-700 px-3 py-1.5 text-sm font-semibold hover:bg-zinc-800"
+				class="rounded-md border border-stone-300 px-3 py-1.5 text-sm font-semibold hover:bg-stone-50"
 				onclick={addSigner}>Add Signer</button
 			>
 			<button
 				type="button"
-				class="rounded-md border border-zinc-700 px-3 py-1.5 text-sm font-semibold hover:bg-zinc-800"
+				class="rounded-md border border-stone-300 px-3 py-1.5 text-sm font-semibold hover:bg-stone-50"
 				onclick={addGroup}>Add Group</button
 			>
 			<button
 				type="button"
 				disabled={!canRemoveSelected}
-				class="rounded-md border border-zinc-700 px-3 py-1.5 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-40 hover:bg-zinc-800"
+				class="rounded-md border border-stone-300 px-3 py-1.5 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-40 hover:bg-stone-50"
 				onclick={removeSelected}>Remove</button
 			>
 			<button
 				type="button"
-				class="rounded-md border border-zinc-700 px-3 py-1.5 text-sm font-semibold hover:bg-zinc-800"
+				class="rounded-md border border-stone-300 px-3 py-1.5 text-sm font-semibold hover:bg-stone-50"
 				onclick={resetAll}>Reset Protocol State</button
 			>
 		</div>
 	</div>
 
-	<div class="rounded-xl border border-zinc-800 bg-zinc-900 p-4">
-		<h2 class="text-sm font-semibold uppercase tracking-wide text-zinc-300">Protocol Steps</h2>
+	<div class="rounded-xl border border-stone-200 bg-white p-4 shadow-sm">
+		<h2 class="text-sm font-semibold uppercase tracking-wide text-stone-500">Protocol Steps</h2>
 		<div class="mt-3 flex items-center gap-2 overflow-x-auto pb-1">
 			{#each steps as step, index}
 				<button
@@ -589,7 +589,7 @@
 					<span>{step.label}</span>
 				</button>
 				{#if index < steps.length - 1}
-					<span class="text-zinc-500">→</span>
+					<span class="text-stone-300">→</span>
 				{/if}
 			{/each}
 		</div>
@@ -597,35 +597,35 @@
 		<div class="mt-3 flex flex-wrap gap-2">
 			<button
 				type="button"
-				class="rounded-md border border-zinc-700 px-3 py-1.5 text-sm font-semibold hover:bg-zinc-800"
+				class="rounded-md border border-stone-300 px-3 py-1.5 text-sm font-semibold hover:bg-stone-50"
 				onclick={runKeyGen}>Run Key Gen</button
 			>
 			<button
 				type="button"
-				class="rounded-md border border-zinc-700 px-3 py-1.5 text-sm font-semibold hover:bg-zinc-800"
+				class="rounded-md border border-stone-300 px-3 py-1.5 text-sm font-semibold hover:bg-stone-50"
 				onclick={runRound1}>Run Round 1</button
 			>
 			<button
 				type="button"
-				class="rounded-md border border-zinc-700 px-3 py-1.5 text-sm font-semibold hover:bg-zinc-800"
+				class="rounded-md border border-stone-300 px-3 py-1.5 text-sm font-semibold hover:bg-stone-50"
 				onclick={runRound2}>Run Round 2</button
 			>
 			<button
 				type="button"
-				class="rounded-md border border-zinc-700 px-3 py-1.5 text-sm font-semibold hover:bg-zinc-800"
+				class="rounded-md border border-stone-300 px-3 py-1.5 text-sm font-semibold hover:bg-stone-50"
 				onclick={runVerify}>Run Verify</button
 			>
 		</div>
 
-		<p class="mt-3 text-sm text-zinc-300">{info}</p>
+		<p class="mt-3 text-sm text-stone-600">{info}</p>
 	</div>
 
-	<div class="rounded-xl border border-zinc-800 bg-zinc-900 p-4">
+	<div class="rounded-xl border border-stone-200 bg-white p-4 shadow-sm">
 		<div class="flex items-center justify-between gap-3">
-			<h2 class="text-sm font-semibold uppercase tracking-wide text-zinc-300">Current Phase</h2>
+			<h2 class="text-sm font-semibold uppercase tracking-wide text-stone-500">Current Phase</h2>
 			<button
 				type="button"
-				class="rounded-md border border-zinc-700 px-2 py-1 text-xs font-semibold hover:bg-zinc-800"
+				class="rounded-md border border-stone-300 px-2 py-1 text-xs font-semibold hover:bg-stone-50"
 				onclick={() => (explanationsOpen = !explanationsOpen)}
 			>
 				{explanationsOpen ? 'Collapse' : 'Expand'}
@@ -634,8 +634,8 @@
 
 		{#if explanationsOpen}
 			<div class="mt-3 space-y-2">
-				<h3 class="text-sm font-semibold text-zinc-100">{currentExplanation.title}</h3>
-				<p class="text-sm text-zinc-300">{currentExplanation.text}</p>
+				<h3 class="text-sm font-semibold text-stone-900">{currentExplanation.title}</h3>
+				<p class="text-sm text-stone-600">{currentExplanation.text}</p>
 				{#if currentExplanation.formula}
 					<KaTeX math={currentExplanation.formula} displayMode />
 				{/if}
@@ -643,11 +643,11 @@
 		{/if}
 	</div>
 
-	<div class="rounded-xl border border-zinc-800 bg-zinc-900 p-4">
+	<div class="rounded-xl border border-stone-200 bg-white p-4 shadow-sm">
 		<label class="block space-y-1">
-			<span class="text-xs uppercase tracking-wide text-zinc-400">Message</span>
+			<span class="text-xs uppercase tracking-wide text-stone-500">Message</span>
 			<input
-				class="w-full rounded-md border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm"
+				class="w-full rounded-md border border-stone-300 bg-white px-3 py-2 text-sm"
 				bind:value={message}
 				placeholder="Message to sign"
 			/>
@@ -667,15 +667,15 @@
 	/>
 
 	<div class="grid gap-4 xl:grid-cols-2">
-		<div class="rounded-xl border border-zinc-800 bg-zinc-900 p-4">
-			<h2 class="mb-2 text-sm font-semibold uppercase tracking-wide text-zinc-300">Node Details</h2>
+		<div class="rounded-xl border border-stone-200 bg-white p-4 shadow-sm">
+			<h2 class="mb-2 text-sm font-semibold uppercase tracking-wide text-stone-500">Node Details</h2>
 			{#if selectedNode}
-				<p class="mb-3 text-sm font-semibold text-zinc-100">{selectedNode.label ?? selectedNode.id}</p>
+				<p class="mb-3 text-sm font-semibold text-stone-900">{selectedNode.label ?? selectedNode.id}</p>
 
 				{#if selectedNode.role === 'leaf'}
 					<div class="space-y-3">
 						<div>
-							<h3 class="mb-1 text-xs font-semibold uppercase tracking-wide text-zinc-400">Key Aggregation</h3>
+							<h3 class="mb-1 text-xs font-semibold uppercase tracking-wide text-stone-500">Key Aggregation</h3>
 							{#if selectedNode.pk}
 								<HexValue value={pointHex(selectedNode.pk)} label="pk" />
 							{/if}
@@ -688,7 +688,7 @@
 						</div>
 
 						<div>
-							<h3 class="mb-1 text-xs font-semibold uppercase tracking-wide text-zinc-400">Round 1</h3>
+							<h3 class="mb-1 text-xs font-semibold uppercase tracking-wide text-stone-500">Round 1</h3>
 							{#if selectedNode.round1Out}
 								<div class="flex flex-col gap-1">
 									{#each selectedNode.round1Out.nonces as nonce, index}
@@ -699,7 +699,7 @@
 						</div>
 
 						<div>
-							<h3 class="mb-1 text-xs font-semibold uppercase tracking-wide text-zinc-400">Round 2</h3>
+							<h3 class="mb-1 text-xs font-semibold uppercase tracking-wide text-stone-500">Round 2</h3>
 							{#if selectedNode.partialSig !== undefined}
 								<HexValue value={scalarHex(selectedNode.partialSig)} label="s" />
 							{/if}
@@ -708,7 +708,7 @@
 				{:else}
 					<div class="space-y-3">
 						<div>
-							<h3 class="mb-1 text-xs font-semibold uppercase tracking-wide text-zinc-400">Key Aggregation</h3>
+							<h3 class="mb-1 text-xs font-semibold uppercase tracking-wide text-stone-500">Key Aggregation</h3>
 							{#if selectedNode.pk}
 								<KaTeX math={'\\tilde{X} = \\prod X_i^{a_i}'} />
 								<div class="mt-1">
@@ -717,7 +717,7 @@
 							{/if}
 
 							{#if selectedNode.keyList && selectedNode.keyList.length > 0}
-								<p class="mt-2 text-xs font-semibold uppercase tracking-wide text-zinc-400">Key List</p>
+								<p class="mt-2 text-xs font-semibold uppercase tracking-wide text-stone-500">Key List</p>
 								<div class="mt-1 flex flex-col gap-1">
 									{#each selectedNode.keyList as keyPoint, index}
 										<HexValue value={pointHex(keyPoint)} label={`X${index + 1}`} />
@@ -726,7 +726,7 @@
 							{/if}
 
 							{#if selectedNode.children}
-								<p class="mt-2 text-xs font-semibold uppercase tracking-wide text-zinc-400">Child Coefficients</p>
+								<p class="mt-2 text-xs font-semibold uppercase tracking-wide text-stone-500">Child Coefficients</p>
 								<div class="mt-1 flex flex-col gap-1">
 									{#each selectedNode.children as child}
 										{#if child.aggCoef !== undefined}
@@ -738,7 +738,7 @@
 						</div>
 
 						<div>
-							<h3 class="mb-1 text-xs font-semibold uppercase tracking-wide text-zinc-400">Round 1</h3>
+							<h3 class="mb-1 text-xs font-semibold uppercase tracking-wide text-stone-500">Round 1</h3>
 							{#if selectedNode.internalAgg}
 								<div class="flex flex-col gap-1">
 									{#each selectedNode.internalAgg as nonce, index}
@@ -764,7 +764,7 @@
 						</div>
 
 						<div>
-							<h3 class="mb-1 text-xs font-semibold uppercase tracking-wide text-zinc-400">Round 2</h3>
+							<h3 class="mb-1 text-xs font-semibold uppercase tracking-wide text-stone-500">Round 2</h3>
 							{#if selectedNode.partialSig !== undefined}
 								<HexValue value={scalarHex(selectedNode.partialSig)} label="aggregate s" />
 							{/if}
@@ -772,12 +772,12 @@
 					</div>
 				{/if}
 			{:else}
-				<p class="text-sm text-zinc-400">Select a node in the flow to inspect key aggregation and signing state.</p>
+				<p class="text-sm text-stone-400">Select a node in the flow to inspect key aggregation and signing state.</p>
 			{/if}
 		</div>
 
-		<div class="rounded-xl border border-zinc-800 bg-zinc-900 p-4">
-			<h2 class="mb-2 text-sm font-semibold uppercase tracking-wide text-zinc-300">Verification</h2>
+		<div class="rounded-xl border border-stone-200 bg-white p-4 shadow-sm">
+			<h2 class="mb-2 text-sm font-semibold uppercase tracking-wide text-stone-500">Verification</h2>
 			<KaTeX math={'g^s = R \\cdot \\tilde{X}^c'} displayMode />
 
 			{#if aggregateKeyHex}
@@ -802,19 +802,19 @@
 			<div class="mt-3 flex flex-wrap gap-2">
 				<button
 					type="button"
-					class="rounded-md border border-zinc-700 px-3 py-1.5 text-sm font-semibold hover:bg-zinc-800"
+					class="rounded-md border border-stone-300 px-3 py-1.5 text-sm font-semibold hover:bg-stone-50"
 					onclick={runVerify}>Verify</button
 				>
 				<button
 					type="button"
 					disabled={!hasSignature}
-					class="rounded-md border border-zinc-700 px-3 py-1.5 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-40 hover:bg-zinc-800"
+					class="rounded-md border border-stone-300 px-3 py-1.5 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-40 hover:bg-stone-50"
 					onclick={tamperSignature}>Tamper</button
 				>
 			</div>
 
 			{#if verificationResult !== null}
-				<p class={['mt-3 text-sm font-semibold', verificationResult ? 'text-emerald-300' : 'text-rose-300']}>
+				<p class={['mt-3 text-sm font-semibold', verificationResult ? 'text-emerald-600' : 'text-rose-600']}>
 					Original signature: {verificationResult ? 'valid' : 'invalid'}
 				</p>
 			{/if}
@@ -825,7 +825,7 @@
 				</div>
 			{/if}
 			{#if tamperedResult !== null}
-				<p class={['mt-2 text-sm font-semibold', tamperedResult ? 'text-amber-300' : 'text-rose-300']}>
+				<p class={['mt-2 text-sm font-semibold', tamperedResult ? 'text-amber-600' : 'text-rose-600']}>
 					Tampered signature: {tamperedResult ? 'valid (unexpected)' : 'invalid (expected)'}
 				</p>
 			{/if}

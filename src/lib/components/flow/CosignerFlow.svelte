@@ -154,7 +154,7 @@
 			},
 			markerEnd: {
 				type: MarkerType.ArrowClosed,
-				color: '#71717a'
+				color: '#A8A29E'
 			}
 		}));
 
@@ -221,7 +221,7 @@
 	});
 </script>
 
-<div class="h-[680px] w-full overflow-hidden rounded-xl border border-zinc-800 bg-zinc-950">
+<div class="h-[680px] w-full overflow-hidden rounded-xl border border-stone-200 bg-cream">
 	<SvelteFlow
 		{nodes}
 		{edges}

@@ -42,12 +42,12 @@
 
 	function stageClass(done: boolean, current: boolean): string {
 		if (done) {
-			return 'border-emerald-500/60 bg-emerald-500/10 text-emerald-200';
+			return 'border-emerald-600/60 bg-emerald-50 text-emerald-700';
 		}
 		if (current) {
-			return 'border-sky-500/60 bg-sky-500/10 text-sky-200';
+			return 'border-indigo-500/60 bg-indigo-50 text-indigo-600';
 		}
-		return 'border-zinc-500/40 bg-zinc-800/40 text-zinc-400';
+		return 'border-stone-300 bg-stone-50 text-stone-400';
 	}
 
 	function startLabelEdit(event: MouseEvent) {
@@ -99,8 +99,8 @@
 	bind:this={element}
 	data-depth={node.depth ?? 0}
 	class={[
-		'nm-flow-node rounded-xl border bg-zinc-700 p-3 text-zinc-100 shadow-lg transition-all',
-		selected ? 'border-sky-400 ring-1 ring-sky-400/50' : 'border-zinc-600/70',
+		'nm-flow-node rounded-xl border bg-white p-3 text-stone-900 shadow-md transition-all',
+		selected ? 'border-indigo-500 ring-1 ring-indigo-500/30' : 'border-stone-300',
 		isCurrent('round1') || isCurrent('round2') ? 'scale-[1.01]' : ''
 	]}
 >
@@ -109,7 +109,7 @@
 	{#if editingLabel}
 		<input
 			bind:this={labelInput}
-			class="mb-2 w-full rounded border border-zinc-500 bg-zinc-900 px-2 py-1 text-sm font-semibold text-zinc-100"
+			class="mb-2 w-full rounded border border-stone-300 bg-white px-2 py-1 text-sm font-semibold text-stone-900"
 			bind:value={draftLabel}
 			onblur={commitLabel}
 			onkeydown={handleLabelKeydown}

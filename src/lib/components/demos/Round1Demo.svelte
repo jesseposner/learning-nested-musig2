@@ -35,12 +35,12 @@
 	regenerate();
 </script>
 
-<div class="not-prose space-y-3 rounded-lg border border-zinc-800 bg-zinc-950 p-4">
+<div class="not-prose space-y-3 rounded-lg border border-stone-200 bg-stone-50 p-4">
 	<div class="flex items-center justify-between gap-3">
-		<h3 class="text-sm font-semibold text-zinc-100">Round 1 Demo</h3>
+		<h3 class="text-sm font-semibold text-stone-900">Round 1 Demo</h3>
 		<button
 			type="button"
-			class="rounded-md border border-zinc-700 px-2 py-1 text-xs font-semibold text-zinc-100 hover:bg-zinc-800"
+			class="rounded-md border border-stone-300 px-2 py-1 text-xs font-semibold text-stone-700 hover:bg-stone-100"
 			onclick={regenerate}>Regenerate</button
 		>
 	</div>
@@ -49,16 +49,16 @@
 
 	<div class="grid gap-3 md:grid-cols-2">
 		{#if leftLeaf?.round1Out}
-			<div class="rounded-md border border-zinc-800 bg-zinc-900 p-3">
-				<p class="mb-2 text-xs font-semibold uppercase tracking-wide text-zinc-300">Alice commitments</p>
+			<div class="rounded-md border border-stone-200 bg-white p-3">
+				<p class="mb-2 text-xs font-semibold uppercase tracking-wide text-stone-500">Alice commitments</p>
 				{#each leftLeaf.round1Out.nonces as nonce, index}
 					<HexValue value={pointHex(nonce)} label={`R${index + 1}`} />
 				{/each}
 			</div>
 		{/if}
 		{#if rightLeaf?.round1Out}
-			<div class="rounded-md border border-zinc-800 bg-zinc-900 p-3">
-				<p class="mb-2 text-xs font-semibold uppercase tracking-wide text-zinc-300">Bob commitments</p>
+			<div class="rounded-md border border-stone-200 bg-white p-3">
+				<p class="mb-2 text-xs font-semibold uppercase tracking-wide text-stone-500">Bob commitments</p>
 				{#each rightLeaf.round1Out.nonces as nonce, index}
 					<HexValue value={pointHex(nonce)} label={`R${index + 1}`} />
 				{/each}
@@ -68,14 +68,14 @@
 
 	{#if root?.internalAgg && root.round1Out}
 		<div class="grid gap-3 md:grid-cols-2">
-			<div class="rounded-md border border-amber-700/50 bg-amber-900/10 p-3">
-				<p class="mb-2 text-xs font-semibold uppercase tracking-wide text-zinc-300">Internal aggregate (SignAgg)</p>
+			<div class="rounded-md border border-amber-300 bg-amber-50 p-3">
+				<p class="mb-2 text-xs font-semibold uppercase tracking-wide text-stone-500">Internal aggregate (SignAgg)</p>
 				{#each root.internalAgg as nonce, index}
 					<HexValue value={pointHex(nonce)} label={`R'${index + 1}`} />
 				{/each}
 			</div>
-			<div class="rounded-md border border-emerald-700/50 bg-emerald-900/10 p-3">
-				<p class="mb-2 text-xs font-semibold uppercase tracking-wide text-zinc-300">External aggregate (SignAggExt)</p>
+			<div class="rounded-md border border-emerald-300 bg-emerald-50 p-3">
+				<p class="mb-2 text-xs font-semibold uppercase tracking-wide text-stone-500">External aggregate (SignAggExt)</p>
 				{#if root.bindingValue !== undefined}
 					<HexValue value={scalarHex(root.bindingValue)} label="b" />
 				{/if}

@@ -56,17 +56,17 @@
 <div
 	role="button"
 	tabindex="0"
-	class="group inline-flex items-center gap-2 rounded bg-zinc-800 px-1.5 py-1 text-left text-xs font-mono text-zinc-200 hover:bg-zinc-700"
+	class="group inline-flex items-center gap-2 rounded bg-stone-100 px-1.5 py-1 text-left text-xs font-mono text-stone-800 hover:bg-stone-200"
 	onclick={toggleExpanded}
 	onkeydown={toggleExpandedWithKeyboard}
 >
 	{#if label}
-		<span class="font-semibold uppercase text-[10px] tracking-wide text-zinc-400">{label}</span>
+		<span class="font-semibold uppercase text-[10px] tracking-wide text-stone-500">{label}</span>
 	{/if}
 	<span class="break-all">{shown}</span>
 	<button
 		type="button"
-		class="pointer-events-none rounded border border-zinc-600 px-1 text-[10px] text-zinc-300 opacity-0 transition-opacity group-hover:pointer-events-auto group-hover:opacity-100"
+		class="pointer-events-none rounded border border-stone-300 px-1 text-[10px] text-stone-500 opacity-0 transition-opacity group-hover:pointer-events-auto group-hover:opacity-100"
 		onclick={copyValue}
 	>
 		{copied ? 'copied' : 'copy'}
