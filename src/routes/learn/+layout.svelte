@@ -5,6 +5,7 @@
 	let { children } = $props();
 
 	const pages = [
+		{ slug: '00-notation', title: 'Notation Guide' },
 		{ slug: '01-introduction', title: 'Introduction' },
 		{ slug: '02-cosigner-tree', title: 'Cosigner Tree' },
 		{ slug: '03-key-aggregation', title: 'Key Aggregation' },

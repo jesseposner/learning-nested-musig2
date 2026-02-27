@@ -1,0 +1,141 @@
+---
+title: Notation Guide
+---
+
+<script lang="ts">
+	import KaTeX from '$lib/components/ui/KaTeX.svelte';
+
+	const Zp = '\\mathbb{Z}_p';
+	const Xtilde = '\\tilde{X}';
+	const bcheck = '\\check{b}';
+	const ccheck = '\\check{c}';
+	const Hagg = 'H_{\\text{agg}}';
+	const Hnon = 'H_{\\text{non}}';
+	const HnonBar = 'H_{\\text{non\\_bar}}';
+	const Hsig = 'H_{\\text{sig}}';
+	const nu = '\\nu';
+	const Lambda = '\\Lambda';
+	const ell = '\\ell';
+	const Rprime = "R'_j";
+	const gx = 'g^x';
+	const gsk = 'g^{sk}';
+	const ai = 'a_i';
+	const aiRijsi = 'a_i, R_{i,j}, s_i';
+	const Rijrjbj = 'R_{i,j}, r_j, b^j';
+	const bellA1ellLell = 'b_\\ell, a_{1,\\ell}, L_\\ell';
+	const Lambda1 = '\\Lambda = 1';
+	const a1ell = 'a_{1,\\ell}';
+	const Xi = 'X_i';
+	const rij = 'r_{i,j}';
+	const Rij = 'R_{i,j}';
+	const grij = 'g^{r_{i,j}}';
+	const Rj = 'R_j';
+	const prodRij = '\\prod_i R_{i,j}';
+	const Rprimebind = "(R'_j)^{b^{j-1}}";
+	const bell = 'b_\\ell';
+	const b0 = 'b_0';
+	const prodbell = '\\prod_{\\ell=0}^{\\Lambda-1} b_\\ell';
+	const HsigXRm = 'H_{\\text{sig}}(\\tilde{X}, R, m)';
+	const cprodaell = 'c \\cdot \\prod_{\\ell=0}^{\\Lambda-1} a_{1,\\ell}';
+	const si = 's_i';
+	const sumsi = '\\sum_i s_i';
+	const sigma = '\\sigma';
+	const Rs = '(R, s)';
+	const HaggLXi = 'H_{\\text{agg}}(L, X_i)';
+	const prodXiai = '\\prod_i X_i^{a_i}';
+</script>
+
+# Notation Guide
+
+This page is a quick reference for the symbols, indices, and conventions used throughout the narrative. Keep it open alongside any other page.
+
+## Conventions
+
+All arithmetic on scalars is mod <KaTeX math="p" />, the order of the secp256k1 curve. Points like <KaTeX math="X" />, <KaTeX math="R" /> live on the curve. We write <KaTeX math={gx} /> for scalar-to-point multiplication (multiplicative group notation), where <KaTeX math="g" /> is the standard generator.
+
+## Index conventions
+
+| Index | Ranges over | Example |
+|---|---|---|
+| <KaTeX math="i" /> | Signers (or keys) within one aggregation level | <KaTeX math={aiRijsi} /> |
+| <KaTeX math="j" /> | Nonce coordinates, 0 to <KaTeX math={nu} /> - 1 | <KaTeX math={Rijrjbj} /> |
+| <KaTeX math={ell} /> | Tree levels on a leaf's path, 0 = root | <KaTeX math={bellA1ellLell} /> |
+| <KaTeX math={Lambda} /> | Nesting depth (number of aggregator ancestors) | Flat MuSig2: <KaTeX math={Lambda1} /> |
+
+The subscript pattern <KaTeX math={a1ell} /> means "signer 1's coefficient at level <KaTeX math={ell} />." The "1" refers to the specific leaf signer whose partial signature is being computed.
+
+## Accent marks
+
+| Mark | Meaning | Examples |
+|---|---|---|
+| Tilde <KaTeX math={Xtilde} /> | Aggregate quantity | <KaTeX math={Xtilde} /> = aggregate public key |
+| Prime <KaTeX math={Rprime} /> | Pre-binding intermediate | <KaTeX math={Rprime} /> = internal aggregate nonce (before `SignAggExt`) |
+| Check <KaTeX math={bcheck} /> | Cascaded product across tree levels | <KaTeX math={bcheck} /> = product of all binding values on path to root |
+
+## Hash functions
+
+All four map arbitrary inputs to scalars in <KaTeX math={Zp} />.
+
+| Function | Inputs | Purpose |
+|---|---|---|
+| <KaTeX math={Hagg} /> | Key multiset <KaTeX math="L" />, key <KaTeX math={Xi} /> | Aggregation coefficient for rogue-key resistance |
+| <KaTeX math={Hnon} /> | Parent key, pre-binding nonce vector | Nonce binding at non-root levels |
+| <KaTeX math={HnonBar} /> | Root key <KaTeX math={Xtilde} />, root nonce vector, message <KaTeX math="m" /> | Nonce binding at root (message-dependent) |
+| <KaTeX math={Hsig} /> | <KaTeX math={Xtilde} />, <KaTeX math="R" />, <KaTeX math="m" /> | Schnorr challenge scalar <KaTeX math="c" /> |
+
+<KaTeX math={Hnon} /> does not include the message. <KaTeX math={HnonBar} /> does. That split allows lower-level nonce exchange to happen before the message is finalized.
+
+## Core symbols
+
+| Symbol | Type | Meaning |
+|---|---|---|
+| <KaTeX math="g" /> | Point | secp256k1 generator |
+| <KaTeX math="p" /> | Scalar | Curve group order |
+| <KaTeX math="m" /> | Bytes | Message to sign |
+| <KaTeX math={nu} /> | Constant | Number of nonce pairs per signer (= 2) |
+| <KaTeX math={Lambda} /> | Integer | Leaf's nesting depth (aggregator count on path to root) |
+| <KaTeX math="sk" /> | Scalar | Leaf signer's secret key |
+| <KaTeX math="pk" /> | Point | Public key: <KaTeX math={gsk} /> |
+| <KaTeX math="L" /> | Multiset | Key multiset at one aggregation level |
+| <KaTeX math={ai} /> | Scalar | Aggregation coefficient: <KaTeX math={HaggLXi} /> |
+| <KaTeX math={Xtilde} /> | Point | Aggregate public key: <KaTeX math={prodXiai} /> |
+| <KaTeX math={rij} /> | Scalar | Nonce secret (single-use) |
+| <KaTeX math={Rij} /> | Point | Nonce commitment: <KaTeX math={grij} /> |
+| <KaTeX math={Rprime} /> | Point | Pre-binding aggregate nonce: <KaTeX math={prodRij} /> |
+| <KaTeX math={Rj} /> | Point | Post-binding aggregate nonce: <KaTeX math={Rprimebind} /> |
+| <KaTeX math="b" /> | Scalar | Binding value from `SignAggExt` |
+| <KaTeX math={bell} /> | Scalar | Binding value at level <KaTeX math={ell} /> |
+| <KaTeX math={b0} /> | Scalar | Root binding (uses <KaTeX math={HnonBar} />, includes <KaTeX math="m" />) |
+| <KaTeX math={bcheck} /> | Scalar | Cascaded binding: <KaTeX math={prodbell} /> |
+| <KaTeX math="c" /> | Scalar | Schnorr challenge: <KaTeX math={HsigXRm} /> |
+| <KaTeX math={ccheck} /> | Scalar | Cascaded challenge: <KaTeX math={cprodaell} /> |
+| <KaTeX math={si} /> | Scalar | Leaf partial signature |
+| <KaTeX math="s" /> | Scalar | Final aggregated signature scalar: <KaTeX math={sumsi} /> |
+| <KaTeX math={sigma} /> | Pair | Signature: <KaTeX math={Rs} /> |
+| <KaTeX math="R" /> | Point | Final root nonce commitment |
+
+## Key formulas
+
+<KaTeX math={'a_i = H_{\\text{agg}}(L, X_i)'} displayMode />
+
+Aggregation coefficient (Key Aggregation)
+
+<KaTeX math={'\\tilde{X} = \\prod_i X_i^{a_i}'} displayMode />
+
+Key aggregation (Key Aggregation)
+
+<KaTeX math={"R'_j = \\prod_i R_{i,j}"} displayMode />
+
+Nonce aggregation, `SignAgg` (Round One)
+
+<KaTeX math={"R_j = (R'_j)^{b^{j-1}}"} displayMode />
+
+Nonce binding, `SignAggExt` (Round One)
+
+<KaTeX math={'s_1 = \\check{c} \\cdot sk + \\sum_{j=0}^{\\nu-1} r_j \\cdot \\check{b}^j'} displayMode />
+
+Partial signature, `Sign'` (Round Two)
+
+<KaTeX math={'g^s = R \\cdot \\tilde{X}^c'} displayMode />
+
+Schnorr verification (Verification)
