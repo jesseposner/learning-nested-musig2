@@ -11,7 +11,7 @@ title: Round One
 
 Round 1 in NestedMuSig2 mirrors MuSig2 in spirit but adds an explicit layered aggregation structure.
 
-Each leaf signer runs `Sign` and samples ν = 2 random nonce scalars for each nonce coordinate, publishing commitments:
+Each leaf signer runs `Sign`, samples ν = 2 random nonce scalars, and publishes a commitment for each:
 
 <KaTeX math={'R_{i,j} = g^{r_{i,j}}'} displayMode />
 
@@ -29,9 +29,9 @@ Next comes `SignAggExt`, which is the critical defense step:
 
 The output R_j values are the external aggregate nonces that propagate upward. Without this binding transform, aggregated nonce vectors are malleable in ways that enable Wagner-style and ROS-style attacks against multi-party signing flows.
 
-A key protocol insight from the paper is what goes into the hash. For non-root levels, binding uses `H_non` and does not include the message `m`. Only at the root does the protocol use `H_non_bar(X̃, R'_1, ..., R'_ν, m)`, which includes the message.
+A key timing insight from the paper is when each hash appears. During Round 1, every level, including the root, runs `SignAggExt` with `H_non` over pre-binding nonce aggregates, and no message is hashed yet. The `H_non_bar(X̃, R'_1, ..., R'_ν, m)` distinction appears in Round 2, where `Sign'` computes the root-level binding value `b_0` and includes the message.
 
-That separation is essential for real systems. It allows lower-level nonce exchange and aggregation to happen before the final message is known, which matches practical workflows where message construction, fee finalization, or policy checks can happen later in the signing pipeline.
+That split is essential for real systems. Lower-level nonce exchange and aggregation stay message-independent, so they can complete before final message construction, fee finalization, or policy checks.
 
 Keep the distinction clear:
 
@@ -41,6 +41,8 @@ Keep the distinction clear:
 If you only keep the external values, Round 2 cannot reconstruct the required cascade correctly for deeper signers.
 
 Operationally, Round 1 is also where robust transcript handling matters. Each node should record which child outputs were included, in which coordinate slots, and which aggregate key was used for the binding hash. If a participant later disputes a signature failure, these Round 1 artifacts are the first place to check for mismatched inputs. In production settings, treating Round 1 as a signed transcript phase, not just a temporary cache, makes debugging and blame workflows much more reliable.
+
+Nonce secrets are strictly single-use. Reusing a nonce across signing sessions is catastrophic for Schnorr-based schemes and can reveal secret keys.
 
 The demo below shows both layers for a small two-leaf tree.
 

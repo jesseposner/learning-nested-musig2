@@ -15,11 +15,11 @@ Take one leaf signer at depth Λ. The signer reconstructs the ancestor contexts 
 1. For each level ℓ, reconstruct that level's key list `L_ℓ` and compute the signer-side coefficient `a_{1,ℓ}` with `KeyAggCoef`.
 2. Collect binding values for each level. Intermediate levels use this form:
 
-<KaTeX math={'b_\\ell = H_{\\text{non}}(pk_{1,\\ell-1}, \\text{internalAgg}_\\ell)'} displayMode />
+<KaTeX math={'b_\\ell = H_{\\text{non}}(pk_{1,\\ell-1}, R^{\\prime}_{1,\\ell}, \\ldots, R^{\\prime}_{\\nu,\\ell})'} displayMode />
 
 and the root uses:
 
-<KaTeX math={'b_0 = H_{\\text{non\\_bar}}(\\tilde{X}, \\text{top nonces}, m)'} displayMode />
+<KaTeX math={'b_0 = H_{\\text{non\\_bar}}(\\tilde{X}, R^{\\prime}_{1,0}, \\ldots, R^{\\prime}_{\\nu,0}, m)'} displayMode />
 
 3. Build the cascade terms:
 
@@ -30,6 +30,8 @@ where `c = H_sig(X̃, R, m)`.
 4. Compute the partial signature:
 
 <KaTeX math={'s_1 = \\check{c} \\cdot sk + \\sum_{j=0}^{\\nu-1} r_j \\cdot \\check{b}^j'} displayMode />
+
+All scalar operations in this step are computed mod p, the curve order.
 
 This equation is the heart of NestedMuSig2. It looks like a normal Schnorr-style affine form, but both challenge and nonce weights are now products across tree levels.
 

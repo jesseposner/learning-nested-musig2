@@ -23,6 +23,8 @@ This gives a useful privacy property: nested policy structure is invisible to th
 
 That property matters for on-chain privacy and system encapsulation. Internal organizational structure, signer hierarchy, and subgroup boundaries stay off the wire. External observers validate correctness, not architecture.
 
+The security model matches MuSig2's proof style. The paper proves NestedMuSig2 secure under the Algebraic One-More Discrete Logarithm (AOMDL) assumption in the random oracle model, consistent with MuSig2's own security proof. In that sense, nested signing inherits the same cryptographic foundation as flat MuSig2.
+
 Another practical benefit is interoperability. Existing Schnorr verification code does not need to understand tree semantics, depth, or per-level binding values. Wallets, indexers, and script evaluators can keep the same verification pathway they already use for non-nested aggregate signatures. NestedMuSig2 shifts complexity to the signer side while preserving a stable external interface.
 
 You can think of verification as the compression boundary of the whole protocol. Upstream phases may involve many participants, intermediate aggregates, and local transcript checks, but all of that state must reduce to one equation at the end. If it does not, either a signer deviated, nonce handling was inconsistent, or message binding changed between phases.

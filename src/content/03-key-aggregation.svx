@@ -19,7 +19,7 @@ MuSig-style aggregation cannot be a simple point sum, because that would allow r
 
 <KaTeX math={'a_i = H_{\\text{agg}}(L, X_i)'} displayMode />
 
-where $L$ is the local key list and $X_i$ is one member key. The aggregate key is then:
+where $L$ is the local key multiset and $X_i$ is one member key. The hash input is order-independent in practice because implementations sort keys before hashing. The aggregate key is then:
 
 <KaTeX math={'\\tilde{X} = \\prod_i X_i^{a_i}'} displayMode />
 

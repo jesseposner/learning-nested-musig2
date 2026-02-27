@@ -12,7 +12,7 @@ NestedMuSig2 models a signing policy as a tree. Leaves are actual signers that h
 
 This representation captures something flat MuSig2 cannot express cleanly: hierarchical control. A leaf signer can be a person with one hardware device. An internal node can represent a team service, a committee, or a key management domain that performs its own internal coordination before contributing one result to a parent.
 
-For each leaf, define its nesting depth Λ as the number of aggregator ancestors on the path from that leaf to the root. In a flat MuSig2 session, every signer has Λ = 1. In a nested tree, different leaves can have different depths.
+For each leaf, define its nesting depth Λ as the number of aggregator ancestors on the path from that leaf to the root. In NestedMuSig2's model, even a flat session includes a root aggregation step, so every signer has Λ = 1. Standard MuSig2 without an explicit tree is exactly this Λ = 1 special case. In a nested tree, different leaves can have different depths.
 
 Consider this concrete tree:
 
