@@ -1,3 +1,7 @@
+<script lang="ts">
+	import { base } from '$app/paths';
+</script>
+
 <svelte:head>
 	<title>Learning NestedMuSig2</title>
 </svelte:head>
@@ -13,11 +17,11 @@
 		<div class="flex flex-wrap gap-3 pt-1">
 			<a
 				class="rounded-md bg-zinc-100 px-4 py-2 text-sm font-semibold text-zinc-900 hover:bg-zinc-200"
-				href="/learn/01-introduction">Start Learning</a
+				href="{base}/learn/01-introduction">Start Learning</a
 			>
 			<a
 				class="rounded-md border border-zinc-700 px-4 py-2 text-sm font-semibold text-zinc-100 hover:bg-zinc-900"
-				href="/playground">Open Playground</a
+				href="{base}/playground">Open Playground</a
 			>
 		</div>
 	</div>
@@ -25,7 +29,7 @@
 	<div class="grid gap-4 md:grid-cols-3">
 		<a
 			class="rounded-lg border border-zinc-800 bg-zinc-900 p-4 transition-colors hover:border-zinc-700 hover:bg-zinc-900/80"
-			href="/learn/01-introduction"
+			href="{base}/learn/01-introduction"
 		>
 			<h2 class="text-base font-semibold text-zinc-100">Step-by-Step Narrative</h2>
 			<p class="mt-2 text-sm text-zinc-300">
@@ -35,7 +39,7 @@
 
 		<a
 			class="rounded-lg border border-zinc-800 bg-zinc-900 p-4 transition-colors hover:border-zinc-700 hover:bg-zinc-900/80"
-			href="/playground"
+			href="{base}/playground"
 		>
 			<h2 class="text-base font-semibold text-zinc-100">Interactive Playground</h2>
 			<p class="mt-2 text-sm text-zinc-300">

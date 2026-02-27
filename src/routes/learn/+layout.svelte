@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/state';
+	import { base } from '$app/paths';
 
 	let { children } = $props();
 
@@ -30,7 +31,7 @@
 							: 'text-zinc-300 hover:bg-zinc-800 hover:text-zinc-100'
 					]}
 					aria-current={currentSlug === page.slug ? 'page' : undefined}
-					href={`/learn/${page.slug}`}>{page.title}</a
+					href={`${base}/learn/${page.slug}`}>{page.title}</a
 				>
 			{/each}
 		</nav>

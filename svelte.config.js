@@ -15,6 +15,9 @@ export default {
 		})
 	],
 	kit: {
-		adapter: adapter({ fallback: '404.html' })
+		adapter: adapter({ fallback: '404.html' }),
+		paths: {
+			base: process.argv.includes('dev') ? '' : '/learning-nested-musig2'
+		}
 	}
 };

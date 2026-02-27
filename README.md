@@ -1,42 +1,41 @@
-# sv
+# Learning NestedMuSig2
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+Interactive educational website for the NestedMuSig2 protocol ([eprint 2026/223](https://eprint.iacr.org/2026/223) by Nadav Kohen, Chaincode Labs).
 
-## Creating a project
+**[Live site](https://jesseposner.github.io/learning-nested-musig2/)**
 
-If you're seeing this, you've probably already done this step. Congrats!
+## What this is
 
-```sh
-# create a new project
-npx sv create my-app
-```
+A step-by-step guide to nested multi-signatures on secp256k1, with an interactive playground for building cosigner trees and running the protocol.
 
-To recreate this project with the same configuration:
+The site assumes familiarity with Schnorr signatures, elliptic curve cryptography, and MuSig2.
 
-```sh
-# recreate this project
-npx sv create --template minimal --types ts --install npm .
-```
+## Features
 
-## Developing
+- **7 narrative pages** walking through the protocol: cosigner tree structure, key aggregation, Round 1 nonce flow, Round 2 cascading coefficients, and verification
+- **3 interactive demos** embedded in the narrative (key aggregation, Round 1, verification)
+- **Interactive playground** for building custom cosigner trees, running each protocol phase step by step, and inspecting every intermediate value
+- **Real cryptography** using `@noble/curves` on secp256k1, not toy numbers
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+## Running locally
 
 ```sh
+npm install
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
 
-## Building
-
-To create a production version of your app:
+## Tests
 
 ```sh
-npm run build
+npm test
 ```
 
-You can preview the production build with `npm run preview`.
+17 tests covering crypto primitives and tree operations.
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+## Stack
+
+SvelteKit, Svelte Flow, GSAP, KaTeX, @noble/curves, Tailwind CSS v4, mdsvex.
+
+## License
+
+MIT

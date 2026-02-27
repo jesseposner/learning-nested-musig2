@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { base } from '$app/paths';
+
 	type PageData = {
 		component: unknown;
 		metadata: Record<string, unknown>;
@@ -38,7 +40,7 @@
 		{#if prevPage}
 			<a
 				class="inline-flex items-center rounded-md border border-zinc-700 px-3 py-1.5 text-sm text-zinc-200 hover:bg-zinc-800"
-				href={`/learn/${prevPage.slug}`}>← {prevPage.title}</a
+				href={`${base}/learn/${prevPage.slug}`}>← {prevPage.title}</a
 			>
 		{/if}
 	</div>
@@ -46,7 +48,7 @@
 		{#if nextPage}
 			<a
 				class="inline-flex items-center rounded-md border border-zinc-700 px-3 py-1.5 text-sm text-zinc-200 hover:bg-zinc-800"
-				href={`/learn/${nextPage.slug}`}>{nextPage.title} →</a
+				href={`${base}/learn/${nextPage.slug}`}>{nextPage.title} →</a
 			>
 		{/if}
 	</div>
